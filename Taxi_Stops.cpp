@@ -86,6 +86,7 @@ public:
     int GetValue(int i) const;
     //демонстрация очереди
     void Show();
+    int Max_Element_Value() const;
 };
 
 void Queue::Show()
@@ -160,6 +161,16 @@ int Queue::Extract()
     else //Если в стеке элементов нет
         return -1;
 }
+int Queue::Max_Element_Value() const
+{
+    int max = GetValue(0);
+
+    for (size_t i = 0; i < GetCount(); i++)
+        if (GetValue(i) > max)
+            max = GetValue(i);
+    
+    return max;
+}
 
 
 class Taxi_Stop
@@ -204,7 +215,7 @@ public:
     //int PasArrGen();
     //int TaxiArrGen();
     void Pas_and_TaxiArrGen();
-    void Day_Delivery();
+    /*void Day_Delivery();*/
     int Aver_Pass_Time() const;
 };
 
@@ -382,12 +393,30 @@ void Taxi_Stop::Pas_and_TaxiArrGen()
             if (Average_Passenger_Arrival[i] * j <= Average_Taxi_Arrival[i] * k)
             {
                 Pas_Arrivals.Add(Average_Passenger_Arrival[i] * j + dur);
+                Waiting_Pas.Add(Average_Passenger_Arrival[i] * j + dur);
+                Pas_On_Stop.Add(Waiting_Pas.GetCount());
                 temp1++;
                 j++;
             }
             else
             {
                 Taxi_Arrivals.Add(Average_Taxi_Arrival[i] * k + dur);
+
+                int j = 0;
+                int l = 0;
+
+                while (j < Taxi_Seats_Number && Waiting_Pas.GetValue(0) <=
+                    Taxi_Arrivals.GetValue(Taxi_Arrivals.GetCount() - 1))
+                {
+                    if (!Waiting_Pas.IsEmpty())
+                    {
+                        int temp = Waiting_Pas.Extract();
+                        l++;
+                        Delivered_Pas.Add(-temp + Taxi_Arrivals.GetValue(i));
+                    }
+                    j++;
+                }
+                Pas_On_Stop.Add(Pas_On_Stop.GetValue(Pas_On_Stop.GetCount() - 1) - l);
                 temp2++;
                 k++;
             }
@@ -398,28 +427,28 @@ void Taxi_Stop::Pas_and_TaxiArrGen()
     }
 
 }
-void Taxi_Stop::Day_Delivery()
-{
-    for (size_t i = 0; i < Pas_Arrivals.GetCount(); i++)
-        Waiting_Pas.Add(Pas_Arrivals.GetValue(i));
-
-    for (size_t i = 0; i < Taxi_Arrivals.GetCount(); i++)
-    {
-        int j = 0;
-
-        while (j < Taxi_Seats_Number && Waiting_Pas.GetValue(0) <= 
-            Taxi_Arrivals.GetValue(i))
-        {
-            if (!Waiting_Pas.IsEmpty())
-            {
-                int temp = Waiting_Pas.Extract();
-                Delivered_Pas.Add(-temp+Taxi_Arrivals.GetValue(i));
-            }
-            j++;
-        }
-
-    }
-}
+//void Taxi_Stop::Day_Delivery()
+//{
+//    for (size_t i = 0; i < Pas_Arrivals.GetCount(); i++)
+//        Waiting_Pas.Add(Pas_Arrivals.GetValue(i));
+//
+//    for (size_t i = 0; i < Taxi_Arrivals.GetCount(); i++)
+//    {
+//        int j = 0;
+//
+//        while (j < Taxi_Seats_Number && Waiting_Pas.GetValue(0) <= 
+//            Taxi_Arrivals.GetValue(i))
+//        {
+//            if (!Waiting_Pas.IsEmpty())
+//            {
+//                int temp = Waiting_Pas.Extract();
+//                Delivered_Pas.Add(-temp+Taxi_Arrivals.GetValue(i));
+//            }
+//            j++;
+//        }
+//
+//    }
+//}
 int Taxi_Stop::Aver_Pass_Time() const
 {
     int sum = 0;
@@ -456,16 +485,22 @@ void main()
     cout << "These taxis could deliver " << TS.Taxi_Arrivals.GetCount() * TS.GetSeatsNum()
         << " passengers.\n";
 
-    TS.Day_Delivery();
+   /* TS.Day_Delivery();*/
 
     cout << "Waiting passengers" << endl;
     TS.Waiting_Pas.Show();
 
     cout << "Delivered passengers" << endl;
     TS.Delivered_Pas.Show();
+
+    cout << "Passengers on stop during a day" << endl;
+    TS.Pas_On_Stop.Show();
     
     cout << "Average time of waiting of delivered passengers is " <<
         TS.Aver_Pass_Time() << endl;
+
+    cout << "Maximum number of waiting passengers on stop was: " <<
+        TS.Pas_On_Stop.Max_Element_Value() << endl;
 
     int max_people;
 
@@ -473,6 +508,8 @@ void main()
     cin >> max_people;*/
 
     max_people = 50;
+
+
 
 
 

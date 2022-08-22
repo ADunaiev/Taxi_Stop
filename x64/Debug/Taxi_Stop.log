@@ -1,8 +1,8 @@
 ﻿  Taxi_Stops.cpp
-C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(221,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(370,48): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(377,37): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(382,65): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(395,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(404,2): warning C4326: return type of 'main' should be 'int' instead of 'void'
+C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(169,12): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(170,29): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(234,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(415,75): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(458,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NDunaev\source\repos\Taxi_Stop\Taxi_Stops.cpp(468,2): warning C4326: return type of 'main' should be 'int' instead of 'void'
   Taxi_Stop.vcxproj -> C:\Users\NDunaev\source\repos\Taxi_Stop\x64\Debug\Taxi_Stop.exe
