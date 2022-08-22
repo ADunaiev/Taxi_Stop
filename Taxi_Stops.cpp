@@ -201,8 +201,9 @@ public:
     void SetAverTaxiArr();
     void SetStopType();
     void show() const;
-    int PasArrGen();
-    int TaxiArrGen();
+    //int PasArrGen();
+    //int TaxiArrGen();
+    void Pas_and_TaxiArrGen();
     void Day_Delivery();
     int Aver_Pass_Time() const;
 };
@@ -325,45 +326,77 @@ void Taxi_Stop::show() const
 
     cout << "Bus stop type is " << stop_type << endl;
 }
-int Taxi_Stop::PasArrGen()
+//int Taxi_Stop::PasArrGen()
+//{
+//    int temp = 0;
+//    int dur = 0;
+//
+//    for (size_t i = 0; i < number_of_day_intervals; i++)
+//    {
+//        int j = 1;
+//        while (Average_Passenger_Arrival[i] * j <= Day_Int[i].GetDuration())
+//        {
+//            Pas_Arrivals.Add(Average_Passenger_Arrival[i] * j + dur);
+//            temp++;
+//            j++;
+//        }
+//        dur += Day_Int[i].GetDuration();
+//    }
+//
+//    return temp;
+//}
+//int Taxi_Stop::TaxiArrGen()
+//{
+//    int temp = 0;
+//    int dur = 0;
+//
+//    for (size_t i = 0; i < number_of_day_intervals; i++)
+//    {
+//        int j = 1;
+//        while (Average_Taxi_Arrival[i] * j <= Day_Int[i].GetDuration())
+//        {
+//            Taxi_Arrivals.Add(Average_Taxi_Arrival[i] * j + dur);
+//            temp++;
+//            j++;
+//        }
+//
+//        dur += Day_Int[i].GetDuration();
+//        
+//    }
+//
+//    return temp;
+//}
+
+void Taxi_Stop::Pas_and_TaxiArrGen()
 {
-    int temp = 0;
+    int temp1=0, temp2 = 0;
     int dur = 0;
 
     for (size_t i = 0; i < number_of_day_intervals; i++)
     {
-        int j = 1;
-        while (Average_Passenger_Arrival[i] * j <= Day_Int[i].GetDuration())
-        {
-            Pas_Arrivals.Add(Average_Passenger_Arrival[i] * j + dur);
-            temp++;
-            j++;
-        }
-        dur += Day_Int[i].GetDuration();
-    }
+        int j = 1; int k = 1;
 
-    return temp;
-}
-int Taxi_Stop::TaxiArrGen()
-{
-    int temp = 0;
-    int dur = 0;
-
-    for (size_t i = 0; i < number_of_day_intervals; i++)
-    {
-        int j = 1;
-        while (Average_Taxi_Arrival[i] * j <= Day_Int[i].GetDuration())
+        while (Average_Passenger_Arrival[i] * j <= Day_Int[i].GetDuration()
+            || Average_Taxi_Arrival[i] * k <= Day_Int[i].GetDuration())
         {
-            Taxi_Arrivals.Add(Average_Taxi_Arrival[i] * j + dur);
-            temp++;
-            j++;
+            if (Average_Passenger_Arrival[i] * j <= Average_Taxi_Arrival[i] * k)
+            {
+                Pas_Arrivals.Add(Average_Passenger_Arrival[i] * j + dur);
+                temp1++;
+                j++;
+            }
+            else
+            {
+                Taxi_Arrivals.Add(Average_Taxi_Arrival[i] * k + dur);
+                temp2++;
+                k++;
+            }
         }
 
         dur += Day_Int[i].GetDuration();
-        
+
     }
 
-    return temp;
 }
 void Taxi_Stop::Day_Delivery()
 {
@@ -405,8 +438,8 @@ int Taxi_Stop::Aver_Pass_Time() const
 void main()
  {
 
-    int pas[3]{ 1, 7, 5 };
-    int tax[3]{ 20, 40, 30 };
+    int pas[3]{ 30, 60, 45 };
+    int tax[3]{ 360, 360, 360 };
 
     Taxi_Stop TS { pas, tax, 0 };
 
@@ -416,8 +449,7 @@ void main()
     TS.show();
 
     cout << "\nThere are " << TS.GetSeatsNum() << " seats in every Taxi\n";
-    TS.PasArrGen();
-    TS.TaxiArrGen();
+    TS.Pas_and_TaxiArrGen();
 
     cout << "There wiil be " << TS.Pas_Arrivals.GetCount() << " passengers per day.\n";
     cout << "There wiil be " << TS.Taxi_Arrivals.GetCount() << " taxi per day.\n";
